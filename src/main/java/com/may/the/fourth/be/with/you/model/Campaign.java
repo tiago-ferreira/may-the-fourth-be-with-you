@@ -10,18 +10,23 @@ public class Campaign {
 	private String id;
 	private String name;
 	private String heartTeamId;
-	private LocalDate validity;
+	private LocalDate creation;
+	private LocalDate beginValidity;
+	private LocalDate endValidity;
 
 	public Campaign() {
 
 	}
 
-	public Campaign(String id, String name, String heartTeamId, LocalDate validity) {
+	public Campaign(String id, String name, String heartTeamId, LocalDate creation, LocalDate beginValidity,
+			LocalDate endValidity) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.heartTeamId = heartTeamId;
-		this.validity = validity;
+		this.creation = creation;
+		this.beginValidity = beginValidity;
+		this.endValidity = endValidity;
 	}
 
 	public String getId() {
@@ -48,11 +53,28 @@ public class Campaign {
 		this.heartTeamId = heartTeamId;
 	}
 
-	public LocalDate getValidity() {
-		return validity;
+	public LocalDate getCreation() {
+		return creation;
 	}
 
-	public void setValidity(LocalDate validity) {
-		this.validity = validity;
+	public void setCreation(LocalDate creation) {
+		this.creation = creation;
 	}
+
+	public LocalDate getBeginValidity() {
+		return beginValidity;
+	}
+
+	public void setBeginValidity(LocalDate beginValidity) {
+		this.beginValidity = beginValidity;
+	}
+
+	public LocalDate getEndValidity() {
+		return endValidity;
+	}
+
+	public void setEndValidity(LocalDate endValidity) {
+		this.endValidity = endValidity;
+	}
+
 }

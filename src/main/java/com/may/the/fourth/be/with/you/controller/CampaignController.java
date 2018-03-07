@@ -1,6 +1,6 @@
 package com.may.the.fourth.be.with.you.controller;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,6 @@ public class CampaignController {
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void create(@RequestBody Campaign campaign) {
-		campaign.setValidity(LocalDate.now());
 		campaignService.create(campaign);
 	}
 
@@ -49,7 +48,7 @@ public class CampaignController {
 	}
 	
 	@GetMapping
-	public Iterable<Campaign> findAll() {
+	public List<Campaign> findActiveCampaigns() {
 		return campaignService.findAll();
 	}
 

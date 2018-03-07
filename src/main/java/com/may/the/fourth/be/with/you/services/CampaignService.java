@@ -1,20 +1,22 @@
 package com.may.the.fourth.be.with.you.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.may.the.fourth.be.with.you.model.Campaign;
-import com.may.the.fourth.be.with.you.repository.CampaignsRepository;
+import com.may.the.fourth.be.with.you.repository.CampaignRepository;
 
 @Service
 public class CampaignService {
 
 	@Autowired
-	private CampaignsRepository campaignsRepository;
+	private CampaignRepository campaignsRepository;
 
 	public void create(Campaign campaign) {
+		campaign.setCreation(LocalDate.now());
 		campaignsRepository.save(campaign);
 	}
 
@@ -22,8 +24,9 @@ public class CampaignService {
 		return campaignsRepository.findById(id).orElse(null);
 	}
 
-	public void update(Campaign user) {
-		campaignsRepository.save(user);
+	public void update(Campaign campaign) {
+		campaign.setCreation(LocalDate.now());
+		campaignsRepository.save(campaign);
 	}
 
 	public void delete(String id) {
@@ -33,8 +36,12 @@ public class CampaignService {
 		}
 	}
 	
-	public Iterable<Campaign> findAll() {
-		return campaignsRepository.findAll();
+	public List<Campaign> findActiveCampaigns() {
+		return campaignsRepository.findActiveCampaigns(LocalDate.now(), LocalDate.now());
+	}
+	
+	public List<Campaign> findAll() {
+		return campaignsRepository.findByBeginValidityLessThanEqualAndEndValidityGreaterThanEqual(LocalDate.now(), LocalDate.now());
 	}
 
 }

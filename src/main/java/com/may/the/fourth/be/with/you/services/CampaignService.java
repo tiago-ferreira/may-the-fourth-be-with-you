@@ -13,36 +13,58 @@ import com.may.the.fourth.be.with.you.repository.CampaignRepository;
 public class CampaignService {
 
 	@Autowired
-	private CampaignRepository campaignsRepository;
+	private CampaignRepository campaignRepository;
 
 	public void create(Campaign campaign) {
+		Boolean hasCampaignInTheSamePeriodo = hasCampaignInTheSamePeriod(campaign.getBeginValidity(), campaign.getEndValidity());
+		if(hasCampaignInTheSamePeriodo) {
+			modifyCampaignPeriod(campaign);
+		}
 		campaign.setCreation(LocalDate.now());
 		campaign.setAlteration(LocalDate.now());
-		campaignsRepository.save(campaign);
+		campaignRepository.save(campaign);
+	}
+
+	private void modifyCampaignPeriod(Campaign campaignToCreate) {
+		List<Campaign> campaigns = findActiveCampaigns();
+		for(Campaign campaign : campaigns) {
+			campaign.setEndValidity(campaign.getEndValidity().plusDays(1));
+			while(hasCampaignInTheSamePeriod(campaign.getBeginValidity(), campaign.getEndValidity()) 
+					|| hasTheSamePeriod(campaign, campaignToCreate)) {
+				campaign.setEndValidity(campaign.getEndValidity().plusDays(1));
+				
+			}
+			campaign.setAlteration(LocalDate.now());
+			campaignRepository.save(campaign);
+		}
+	}
+	
+	private Boolean hasTheSamePeriod(Campaign c1, Campaign c2) {
+		return c1.getBeginValidity().equals(c2.getBeginValidity()) && c1.getEndValidity().equals(c2.getEndValidity());
 	}
 
 	public Campaign read(String id) {
-		return campaignsRepository.findById(id).orElse(null);
+		return campaignRepository.findById(id).orElse(null);
 	}
 
 	public void update(Campaign campaign) {
 		campaign.setAlteration(LocalDate.now());
-		campaignsRepository.save(campaign);
+		campaignRepository.save(campaign);
 	}
 
 	public void delete(String id) {
 		Campaign campaing = read(id);
 		if (campaing != null) {
-			campaignsRepository.delete(campaing);
+			campaignRepository.delete(campaing);
 		}
 	}
 	
 	public List<Campaign> findActiveCampaigns() {
-		return campaignsRepository.findByBeginValidityLessThanEqualAndEndValidityGreaterThanEqual(LocalDate.now(), LocalDate.now());
+		return campaignRepository.findByBeginValidityLessThanEqualAndEndValidityGreaterThanEqual(LocalDate.now(), LocalDate.now());
 	}
 	
 	public Boolean hasCampaignInTheSamePeriod(LocalDate beginValidity, LocalDate endValidity) {
-		List<Campaign> campaigns = campaignsRepository.findByBeginValidityAndEndValidity(beginValidity, endValidity);
+		List<Campaign> campaigns = campaignRepository.findByBeginValidityAndEndValidity(beginValidity, endValidity);
 		return (campaigns.size() > 0);
 	}
 	

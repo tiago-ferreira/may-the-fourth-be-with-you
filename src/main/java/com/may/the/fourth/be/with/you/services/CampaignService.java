@@ -37,11 +37,7 @@ public class CampaignService {
 	}
 	
 	public List<Campaign> findActiveCampaigns() {
-		return campaignsRepository.findActiveCampaigns(LocalDate.now(), LocalDate.now());
-	}
-	
-	public List<Campaign> findAll() {
 		return campaignsRepository.findByBeginValidityLessThanEqualAndEndValidityGreaterThanEqual(LocalDate.now(), LocalDate.now());
 	}
-
+	
 }

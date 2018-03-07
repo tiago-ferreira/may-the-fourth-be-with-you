@@ -49,7 +49,7 @@ public class CampaignController {
 	
 	@GetMapping
 	public List<Campaign> findActiveCampaigns() {
-		return campaignService.findAll();
+		return campaignService.findActiveCampaigns();
 	}
 
 }

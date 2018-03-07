@@ -17,6 +17,7 @@ public class CampaignService {
 
 	public void create(Campaign campaign) {
 		campaign.setCreation(LocalDate.now());
+		campaign.setAlteration(LocalDate.now());
 		campaignsRepository.save(campaign);
 	}
 
@@ -25,7 +26,7 @@ public class CampaignService {
 	}
 
 	public void update(Campaign campaign) {
-		campaign.setCreation(LocalDate.now());
+		campaign.setAlteration(LocalDate.now());
 		campaignsRepository.save(campaign);
 	}
 
@@ -38,6 +39,11 @@ public class CampaignService {
 	
 	public List<Campaign> findActiveCampaigns() {
 		return campaignsRepository.findByBeginValidityLessThanEqualAndEndValidityGreaterThanEqual(LocalDate.now(), LocalDate.now());
+	}
+	
+	public Boolean hasCampaignInTheSamePeriod(LocalDate beginValidity, LocalDate endValidity) {
+		List<Campaign> campaigns = campaignsRepository.findByBeginValidityAndEndValidity(beginValidity, endValidity);
+		return (campaigns.size() > 0);
 	}
 	
 }

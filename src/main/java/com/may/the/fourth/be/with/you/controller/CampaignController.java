@@ -38,8 +38,8 @@ public class CampaignController {
 
 	@PutMapping()
 	@ResponseBody
-	public void update(@RequestBody Campaign user) {
-		campaignService.update(user);
+	public void update(@RequestBody Campaign campaign) {
+		campaignService.update(campaign);
 	}
 
 	@DeleteMapping(value = "/{id}")
@@ -50,6 +50,11 @@ public class CampaignController {
 	@GetMapping
 	public List<Campaign> findActiveCampaigns() {
 		return campaignService.findActiveCampaigns();
+	}
+	
+	@PostMapping(value = "/hasCampaignInTheSamePeriodo")
+	public Boolean  hasCampaignInTheSamePeriod(@RequestBody Campaign campaign) {
+		return campaignService.hasCampaignInTheSamePeriod(campaign.getBeginValidity(), campaign.getEndValidity());
 	}
 
 }

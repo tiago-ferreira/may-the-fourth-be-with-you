@@ -13,4 +13,6 @@ public interface CampaignRepository extends MongoRepository<Campaign, String>{
 	
 	List<Campaign> findByBeginValidityAndEndValidity(LocalDate beginValidity, LocalDate endValidity);
 	
+	List<Campaign> findByHeartTeamId(String heartTeamId);
+	
 }

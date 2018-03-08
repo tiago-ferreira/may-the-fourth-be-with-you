@@ -68,4 +68,8 @@ public class CampaignService {
 		return (campaigns.size() > 0);
 	}
 	
+	public List<Campaign> findByHeartTeamId(String heartTeamId) {
+		return campaignRepository.findByHeartTeamId(heartTeamId);
+	}
+	
 }

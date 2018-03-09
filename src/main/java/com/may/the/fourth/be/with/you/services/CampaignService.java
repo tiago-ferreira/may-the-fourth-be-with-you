@@ -68,8 +68,8 @@ public class CampaignService {
 		return (campaigns.size() > 0);
 	}
 	
-	public List<Campaign> findByHeartTeamId(String heartTeamId) {
-		return campaignRepository.findByHeartTeamId(heartTeamId);
+	public List<Campaign> findActiveCampaignsByHeartTeamId(String heartTeamId) {
+		return campaignRepository.findByBeginValidityLessThanEqualAndEndValidityGreaterThanEqualAndHeartTeamId(LocalDate.now(), LocalDate.now(), heartTeamId);
 	}
 	
 }

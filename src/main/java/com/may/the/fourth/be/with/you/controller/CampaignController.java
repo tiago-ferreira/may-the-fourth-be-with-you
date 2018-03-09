@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +36,6 @@ public class CampaignController {
 	}
 
 	@PutMapping()
-	@ResponseBody
 	public void update(@RequestBody Campaign campaign) {
 		campaignService.update(campaign);
 	}
@@ -61,7 +58,7 @@ public class CampaignController {
 	
 	@GetMapping(value="heartTeam/{heartTeamId}")
 	public List<Campaign> findByHeartTeamId(@PathVariable("heartTeamId") String heartTeamId) {
-		return campaignService.findByHeartTeamId(heartTeamId);
+		return campaignService.findActiveCampaignsByHeartTeamId(heartTeamId);
 	}
 
 }

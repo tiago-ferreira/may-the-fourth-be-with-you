@@ -19,3 +19,9 @@ E a camada responsavel por disponibilizar as servicos Rest para que outras aplic
 
 ## Banco de Dados
 Como banco de daods foi utlizado o Mongo
+
+
+## Executar
+
+- mvn clean install
+- docker-compose up -d

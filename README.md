@@ -25,3 +25,24 @@ Como banco de daods foi utlizado o Mongo
 
 - mvn clean install
 - docker-compose up -d
+
+A aplicação irá iniciar em http://localhost:8080
+
+## Servicos para explorar
+
+GET /campaign
+
+POST /campaign
+
+PUT /campaign
+
+DELETE /campaign
+
+Exemplo de Json para fazer um POST
+{
+"id":"E04",
+"name":"Winter 2",
+"heartTeamId":"HT03",
+"beginValidity":"2018-03-07",
+"endValidity":"2018-03-08"
+}

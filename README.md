@@ -24,6 +24,7 @@ Como banco de daods foi utlizado o Mongo
 ## Executar
 
 - mvn clean install
+- docker-compose build
 - docker-compose up -d
 
 A aplicação irá iniciar em http://localhost:8080

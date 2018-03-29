@@ -4,15 +4,25 @@ import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Campaign {
 
 	@Id
 	private String id;
+	@Size(min = 2, message = "Name must be have atleast 2 characteres")
+	@NotNull(message = "The Name cannot be null")
 	private String name;
+	@NotNull(message = "The HeartTeamId cannot be null")
 	private String heartTeamId;
 	private LocalDate creation;
 	private LocalDate alteration;
+	@NotNull(message = "The BeginValidity cannot be null")
 	private LocalDate beginValidity;
+	@FutureOrPresent(message = "The EndValidity must be at present or future")
+	@NotNull(message = "The EndValidity cannot be null")
 	private LocalDate endValidity;
 
 	public Campaign() {

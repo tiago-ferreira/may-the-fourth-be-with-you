@@ -18,49 +18,51 @@ import org.springframework.web.bind.annotation.RestController;
 import com.may.the.fourth.be.with.you.model.Campaign;
 import com.may.the.fourth.be.with.you.services.CampaignService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/campaign")
 public class CampaignController {
 
-	@Autowired
-	private CampaignService campaignService;
+    @Autowired
+    private CampaignService campaignService;
 
-	@PostMapping
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody Campaign campaign) {
-		campaignService.create(campaign);
-	}
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void create(@Valid @RequestBody Campaign campaign) {
+        campaignService.create(campaign);
+    }
 
-	@GetMapping(value = "/{id}")
-	public Campaign read(@PathVariable("id") String id) {
-		return campaignService.read(id).orElseThrow( () -> new ResourceNotFoundException("Campaign","id",id) );
-	}
+    @GetMapping(value = "/{id}")
+    public Campaign read(@PathVariable("id") String id) {
+        return campaignService.read(id).orElseThrow(() -> new ResourceNotFoundException("Campaign", "id", id));
+    }
 
-	@PutMapping()
-	public void update(@RequestBody Campaign campaign) {
-		campaignService.update(campaign);
-	}
+    @PutMapping()
+    public void update(@RequestBody Campaign campaign) {
+        campaignService.update(campaign);
+    }
 
-	@DeleteMapping(value = "/{id}")
-	public void delete(@PathVariable("id") String id) {
-		campaignService.read(id).orElseThrow( () -> new ResourceNotFoundException("Campaign","id",id) );
-		campaignService.delete(id);
-	}
-	
-	@GetMapping
-	public List<Campaign> findActiveCampaigns() {
-		return campaignService.findActiveCampaigns();
-	}
-	
-	@PostMapping(value = "/hasCampaignInTheSamePeriodo")
-	public Boolean  hasCampaignInTheSamePeriod(@RequestBody Campaign campaign) {
-		return campaignService.hasCampaignInTheSamePeriod(campaign.getBeginValidity(), campaign.getEndValidity());
-	}
-	
-	
-	@GetMapping(value="heartTeam/{heartTeamId}")
-	public List<Campaign> findByHeartTeamId(@PathVariable("heartTeamId") String heartTeamId) {
-		return campaignService.findActiveCampaignsByHeartTeamId(heartTeamId);
-	}
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") String id) {
+        campaignService.read(id).orElseThrow(() -> new ResourceNotFoundException("Campaign", "id", id));
+        campaignService.delete(id);
+    }
+
+    @GetMapping
+    public List<Campaign> findActiveCampaigns() {
+        return campaignService.findActiveCampaigns();
+    }
+
+    @PostMapping(value = "/hasCampaignInTheSamePeriodo")
+    public Boolean hasCampaignInTheSamePeriod(@RequestBody Campaign campaign) {
+        return campaignService.hasCampaignInTheSamePeriod(campaign.getBeginValidity(), campaign.getEndValidity());
+    }
+
+
+    @GetMapping(value = "heartTeam/{heartTeamId}")
+    public List<Campaign> findByHeartTeamId(@PathVariable("heartTeamId") String heartTeamId) {
+        return campaignService.findActiveCampaignsByHeartTeamId(heartTeamId);
+    }
 
 }

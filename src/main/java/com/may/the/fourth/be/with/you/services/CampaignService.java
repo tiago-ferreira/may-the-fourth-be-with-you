@@ -2,7 +2,9 @@ package com.may.the.fourth.be.with.you.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+import com.may.the.fourth.be.with.you.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +45,8 @@ public class CampaignService {
 		return c1.getBeginValidity().equals(c2.getBeginValidity()) && c1.getEndValidity().equals(c2.getEndValidity());
 	}
 
-	public Campaign read(String id) {
-		return campaignRepository.findById(id).orElse(null);
+	public Optional<Campaign> read(String id) {
+		return campaignRepository.findById(id);
 	}
 
 	public void update(Campaign campaign) {
@@ -53,9 +55,9 @@ public class CampaignService {
 	}
 
 	public void delete(String id) {
-		Campaign campaing = read(id);
+		Optional<Campaign> campaing = read(id);
 		if (campaing != null) {
-			campaignRepository.delete(campaing);
+			campaignRepository.delete(campaing.get());
 		}
 	}
 	

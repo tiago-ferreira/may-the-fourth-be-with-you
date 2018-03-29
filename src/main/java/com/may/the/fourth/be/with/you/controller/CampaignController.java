@@ -2,6 +2,7 @@ package com.may.the.fourth.be.with.you.controller;
 
 import java.util.List;
 
+import com.may.the.fourth.be.with.you.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +33,7 @@ public class CampaignController {
 
 	@GetMapping(value = "/{id}")
 	public Campaign read(@PathVariable("id") String id) {
-		return campaignService.read(id);
+		return campaignService.read(id).orElseThrow( () -> new ResourceNotFoundException("Campaign","id",id) );
 	}
 
 	@PutMapping()

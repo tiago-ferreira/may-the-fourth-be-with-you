@@ -43,6 +43,7 @@ public class CampaignController {
 
 	@DeleteMapping(value = "/{id}")
 	public void delete(@PathVariable("id") String id) {
+		campaignService.read(id).orElseThrow( () -> new ResourceNotFoundException("Campaign","id",id) );
 		campaignService.delete(id);
 	}
 	
